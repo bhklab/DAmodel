@@ -24,7 +24,7 @@
     "provenance": "Contributed by author",
     "architecture": "A three-dimensional (3D) convolutional neural network (CNN).",
     "learning_type": "Supervised Learning",
-    "format": ".py",
+    "format": ".pth.tar",
     "io": {
       "input": {
         "format": ["application/json"],
@@ -37,11 +37,9 @@
           },
           {
             "min": 256
-            "max": 256
           },
           {
             "min": 256
-            "max": 256
           }
         ],
          "description":"Single 3D nrrd image as input with minimal and maximal input size constraints."
