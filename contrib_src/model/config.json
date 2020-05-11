@@ -46,7 +46,7 @@
         ],
          "description":"Single 3D nrrd image as input with minimal and maximal input size constraints."
         },
-        "description": "Images should be resampled to a uniform voxel size (1x1x1mm^3), padded to a uniform size in all dimensions (to maintain the aspect ratio), then downsampled to a 256 cube. This is automatically completed with the function LoadImage."
+        "description": ""
       },
       "output": [
         {
