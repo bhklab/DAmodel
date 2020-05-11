@@ -1,8 +1,11 @@
 from modelhublib.processor import ImageProcessorBase
+from torch.autograd import Variable
 import PIL
 import SimpleITK
 import numpy as np
 import json
+from skimage.transform import resize
+import math
 
 
 class ImageProcessor(ImageProcessorBase):
@@ -15,14 +18,55 @@ class ImageProcessor(ImageProcessorBase):
         if isinstance(image, PIL.Image.Image):
             # TODO: implement preprocessing of PIL image objects
         elif isinstance(image, SimpleITK.Image):
-            # TODO: implement preprocessing of SimpleITK image objects
-        else:
-            raise IOError("Image Type not supported for preprocessing.")
+            #----START---Resample image to common resolution of 1x1x1----START-----#
+            new_spacing = [1,1,1]
+            
+            #Set up SitK resampling image filter
+            rif = SimpleITK.ResampleImageFilter()
+            rif.SetOutputSpacing(new_spacing)
+            rif.SetOutputDirection(image.GetDirection())
+            
+            #Get original image size and spacing
+            orig_size = np.array(image.GetSize(), dtype = np.int)
+            orig_spacing = np.array(image.GetSpacing())
+            
+            #Calculate new image size based on current size and desired spacing. 
+            new_size = np.ceil(orig_size*(orig_spacing/new_spacing)).astype(np.int)
+            new_size = [int(s) for s in new_size]
+            
+            #Set up SitK resampling parameters
+            rif.SetSize(new_size)
+            rif.SetOutputOrigin(image.GetOrigin())
+            rif.SetOutputPixelType(image.GetPixelID())
+            rif.SetInterpolator(sitk.sitkLinear)
+            
+            #Resample image and generate numpy array from image
+            image = rif.Execute(image)
+            
         return image
 
-
     def _preprocessAfterConversionToNumpy(self, npArr):
-        # TODO: implement preprocessing of image after it was converted to a numpy array
+        #--START-----Resize and Pad image to a uniform 256x256x256 voxel cube with retained aspect ratio----START----
+        #Generate isotropic array of zeros based on maximum dimension of image
+        pad = np.zeros((3,1))
+        pad[0,0] = max(npArr.shape) - npArr.shape[0]
+        pad[1,0] = max(npArr.shape) - npArr.shape[1]
+        pad[2,0] = max(npArr.shape) - npArr.shape[2]
+
+        paddedImage = np.zeros((max(npArr.shape),max(npArr.shape),max(npArr.shape)))
+        #Pad image
+        paddedImage = np.pad(npArr, ((int(math.ceil(pad[0,0]/2)), int(math.floor(pad[0,0]/2))),(int(math.ceil(pad[1,0]/2)), int(math.floor(pad[1,0]/2))),(int(math.ceil(pad[2,0]/2)), int(math.floor(pad[2,0]/2)))), 'constant', constant_values=0)
+        #Resize padded image to desired size 256
+        size_new = 256
+        npArr = resize(paddedImage, (size_new, size_new, size_new), preserve_range = True)
+        
+        #--END-----Resize and Pad image to a uniform 256x256x256 voxel cube with retained aspect ratio----END----
+        
+        #---START---Transform to Tensor ---START
+        npArr = np.expand_dims(image, axis=0)
+        npArr = np.expand_dims(image, axis=0)
+        npArr = torch.from_numpy(image.copy()).float()
+        npArr = Variable(image)
         return npArr
 
 
