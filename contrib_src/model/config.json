@@ -49,8 +49,8 @@
       "output": [
         {
           "name": "classification",
-          "type": "int and array",
-          "description": "returns predicted class (int) and softmax class prediction (array[0] = no dental artifact, array[1] = dental artifact"
+          "type": "array",
+          "description": "returns softmax class prediction (array[0] = no dental artifact, array[1] = dental artifact"
         }
       ]
     }
