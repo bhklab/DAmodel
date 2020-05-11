@@ -27,5 +27,9 @@ class ImageProcessor(ImageProcessorBase):
 
 
     def computeOutput(self, inferenceResults):
-        # TODO: implement postprocessing of inference results
+        #compute the softmax probabilty of the image containing no dental artifact (result[0]) or containing a dental artifact (result[1])
+        inference_result = inferenceResults.data.numpy()[0]
+        e_x = np.exp(inference_result-np.max(inference_result))
+        outputs_softmax = e_x/e_x.sum(axis = 0)
+        result = np.array(outputs_softmax)
         return result
