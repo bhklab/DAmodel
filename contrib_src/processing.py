@@ -17,6 +17,7 @@ class ImageProcessor(ImageProcessorBase):
     def _preprocessBeforeConversionToNumpy(self, image):
         if isinstance(image, PIL.Image.Image):
             # TODO: implement preprocessing of PIL image objects
+            place_holder = True # Cannot have empty if blocks, syntax error
         elif isinstance(image, SimpleITK.Image):
             #----START---Resample image to common resolution of 1x1x1----START-----#
             new_spacing = [1,1,1]
