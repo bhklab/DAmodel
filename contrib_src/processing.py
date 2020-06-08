@@ -39,7 +39,7 @@ class ImageProcessor(ImageProcessorBase):
             rif.SetSize(new_size)
             rif.SetOutputOrigin(image.GetOrigin())
             rif.SetOutputPixelType(image.GetPixelID())
-            rif.SetInterpolator(sitk.sitkLinear)
+            rif.SetInterpolator(SimpleITK.sitkLinear)
             
             #Resample image and generate numpy array from image
             image = rif.Execute(image)

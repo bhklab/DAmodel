@@ -51,7 +51,7 @@ class Model(ModelBase):
 
     def __init__(self):
         # load config file
-        config = json.load(open("model/config.json"))
+        config = json.load(open("model/config.json", encoding="utf-8"))
         # get the image processor
         self._imageProcessor = ImageProcessor(config)
         # load the DL model 
@@ -64,7 +64,7 @@ class Model(ModelBase):
     
         optimizer = optim.SGD(self._model.parameters(), lr = learning_rate, momentum=momentum, weight_decay = weight_decay) 
       
-        checkpoint = torch.load('model/testCheckpoint.pth.tar, map_location=lambda storage, loc:storage')
+        checkpoint = torch.load('model/testCheckpoint.pth.tar', map_location=lambda storage, loc:storage)
         optimizer.load_state_dict(checkpoint['optimizer'])
 
         self._model.load_state_dict(checkpoint['state_dict'])
@@ -75,7 +75,7 @@ class Model(ModelBase):
         # load preprocessed input
         inputAsNpArr = self._imageProcessor.loadAndPreprocess(input)
         # Run inference
-        results = self._model(input)
+        results = self._model.forward(input)
         # postprocess results into output
         output = self._imageProcessor.computeOutput(results)
         return output
