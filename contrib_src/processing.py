@@ -6,6 +6,7 @@ import numpy as np
 import json
 from skimage.transform import resize
 import math
+import torch
 
 
 class ImageProcessor(ImageProcessorBase):
@@ -43,6 +44,7 @@ class ImageProcessor(ImageProcessorBase):
             
             #Resample image and generate numpy array from image
             image = rif.Execute(image)
+            image = SimpleITK.GetArrayFromImage(image)
             
         return image
 
@@ -64,10 +66,10 @@ class ImageProcessor(ImageProcessorBase):
         #--END-----Resize and Pad image to a uniform 256x256x256 voxel cube with retained aspect ratio----END----
         
         #---START---Transform to Tensor ---START
-        npArr = np.expand_dims(image, axis=0)
-        npArr = np.expand_dims(image, axis=0)
-        npArr = torch.from_numpy(image.copy()).float()
-        npArr = Variable(image)
+        npArr = np.expand_dims(npArr, axis=0)
+        npArr = np.expand_dims(npArr, axis=0)
+        npArr = torch.from_numpy(npArr.copy()).float()
+        npArr = Variable(npArr)
         return npArr
 
 
