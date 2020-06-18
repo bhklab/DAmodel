@@ -16,6 +16,7 @@ class ImageProcessor(ImageProcessorBase):
     #           You can skip this and just perform the preprocessing after
     #           the input image has been convertet to a numpy array (see below).
     def _preprocessBeforeConversionToNumpy(self, image):
+        image = SimpleITK.ReadImage(image)
         if isinstance(image, PIL.Image.Image):
             # TODO: implement preprocessing of PIL image objects
             place_holder = True # Cannot have empty if blocks, syntax error

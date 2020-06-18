@@ -75,7 +75,7 @@ class Model(ModelBase):
         # load preprocessed input
         inputAsNpArr = self._imageProcessor.loadAndPreprocess(input)
         # Run inference
-        results = self._model.forward(input)
+        results = self._model.forward(inputAsNpArr)
         # postprocess results into output
         output = self._imageProcessor.computeOutput(results)
         return output
