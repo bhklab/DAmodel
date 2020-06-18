@@ -49,7 +49,7 @@
       "output": [
         {
           "name": "classification",
-          "type": "image",
+          "type": "labellist",
           "description": "returns softmax class prediction (array[0] = no dental artifact, array[1] = dental artifact"
         }
       ]
