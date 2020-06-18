@@ -80,4 +80,5 @@ class ImageProcessor(ImageProcessorBase):
         e_x = np.exp(inference_result-np.max(inference_result))
         outputs_softmax = e_x/e_x.sum(axis = 0)
         result = np.array(outputs_softmax)
+        print(result)
         return result
