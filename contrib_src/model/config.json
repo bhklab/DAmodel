@@ -1,7 +1,7 @@
 {
   "id": "f8063322-cbba-4dd4-85cc-3a939b1bb608",
   "meta": {
-    "name": "DentalArtifactModel",
+    "name": "dental-artifact-model",
     "application_area": "Head and Neck Computed Tomography Images",
     "task": "Classification",
     "task_extended": "Classification of dental artifact presence in H&N CT",
@@ -27,22 +27,22 @@
     "format": ".pth.tar",
     "io": {
       "input": {
-        "format": ["application/json"],
-        "single":{
+        "format": ["application/nrrd"],
+        "single": {
           "format": ["application/nrrd"],
           "dim_limits": [
-          {
-            "min": 100,
-            "max": 256
-          },
-          {
-            "min": 256
-          },
-          {
-            "min": 256
-          }
-        ],
-         "description":"Single 3D nrrd image as input with minimal and maximal input size constraints."
+            {
+              "min": 100,
+              "max": 256
+            },
+            {
+              "min": 256
+            },
+            {
+              "min": 256
+            }
+          ],
+          "description": "Single 3D nrrd image as input with minimal and maximal input size constraints."
         },
         "description": ""
       },
