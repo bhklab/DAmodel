@@ -79,5 +79,17 @@ class ImageProcessor(ImageProcessorBase):
         inference_result = inferenceResults.data.numpy()[0]
         e_x = np.exp(inference_result-np.max(inference_result))
         outputs_softmax = e_x/e_x.sum(axis = 0)
-        result = np.array(outputs_softmax)
+        inferenceResults = np.array(outputs_softmax)
+        #
+        probs = np.squeeze(np.asarray(inferenceResults))
+        with open("model/labels.json") as jsonFile:
+            labels = json.load(jsonFile)
+        result = []
+        for i in range (len(probs)):
+            obj = {'label': str(labels[str(i)]),
+                   'probability': float(probs[i])}
+            result.append(obj)
+        print ('postprocessing done.')
+
+        print (result)
         return result
