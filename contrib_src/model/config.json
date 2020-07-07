@@ -1,7 +1,7 @@
 {
   "id": "f8063322-cbba-4dd4-85cc-3a939b1bb608",
   "meta": {
-    "name": "dental-artifact-model",
+    "name": "DentalArtifactModel",
     "application_area": "Head and Neck Computed Tomography Images",
     "task": "Classification",
     "task_extended": "Classification of dental artifact presence in H&N CT",
