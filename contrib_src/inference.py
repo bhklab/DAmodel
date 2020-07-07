@@ -61,10 +61,10 @@ class Model(ModelBase):
         learning_rate = 0.001
         momentum = 0.9
         weight_decay = 0.0001
-    
-        optimizer = optim.SGD(self._model.parameters(), lr = learning_rate, momentum=momentum, weight_decay = weight_decay) 
-      
-        checkpoint = torch.load('model/testCheckpoint.pth.tar', map_location=lambda storage, loc:storage)
+
+        optimizer = optim.SGD(self._model.parameters(), lr = learning_rate, momentum=momentum, weight_decay = weight_decay)
+
+        checkpoint = torch.load('model/model.pth.tar', map_location=lambda storage, loc:storage)
         optimizer.load_state_dict(checkpoint['optimizer'])
 
         self._model.load_state_dict(checkpoint['state_dict'])
